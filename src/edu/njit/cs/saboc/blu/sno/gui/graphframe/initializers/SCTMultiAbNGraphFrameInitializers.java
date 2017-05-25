@@ -98,6 +98,7 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
 
     @Override
     public GraphFrameInitializer<PAreaTaxonomy, PAreaTaxonomyConfiguration> getAreaTaxonomyInitializer() {
+        
         return new AreaTaxonomyInitializer(warningManager) {
             
             @Override
@@ -222,9 +223,14 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
                                 frameManager,
                                 false),
                         
-                        (bound) -> {
-                            DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getAggregated(bound);
-                            config.getUIConfiguration().getAbNDisplayManager().displayDisjointPAreaTaxonomy(disjointAbN);
+                        (bound, isWeightedAggregated) -> {
+                            if (isWeightedAggregated) {
+                                DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getWeightedAggregated(bound, isWeightedAggregated);
+                                config.getUIConfiguration().getAbNDisplayManager().displayDisjointPAreaTaxonomy(disjointAbN);
+                            } else {
+                                DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getAggregated(bound);
+                                config.getUIConfiguration().getAbNDisplayManager().displayDisjointPAreaTaxonomy(disjointAbN);
+                            }
                         }, 
                         warningManager);
             }
@@ -254,19 +260,25 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
             @Override
             public AbNExplorationPanelGUIInitializer getExplorationGUIInitializer(DisjointAbNConfiguration config) {
 
-                ClusterTribalAbstractionNetwork tan = (ClusterTribalAbstractionNetwork)config.getAbstractionNetwork().getParentAbstractionNetwork();
+                ClusterTribalAbstractionNetwork tan = (ClusterTribalAbstractionNetwork) config.getAbstractionNetwork().getParentAbstractionNetwork();
 
                 return new DisjointAbNExplorationPanelInitializer(
                         config,
                         new SCTTANConfigurationFactory().createConfiguration(
-                                tan, 
-                                config.getUIConfiguration().getAbNDisplayManager(), 
+                                tan,
+                                config.getUIConfiguration().getAbNDisplayManager(),
                                 frameManager,
                                 false),
                         
-                        (bound) -> {
-                            DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getAggregated(bound);
-                            config.getUIConfiguration().getAbNDisplayManager().displayDisjointTribalAbstractionNetwork(disjointAbN);
+                        (bound, isWeightedAggregated) -> {
+                            if (isWeightedAggregated) {
+                                DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getWeightedAggregated(bound, isWeightedAggregated);
+                                config.getUIConfiguration().getAbNDisplayManager().displayDisjointTribalAbstractionNetwork(disjointAbN);
+
+                            } else {
+                                DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getAggregated(bound);
+                                config.getUIConfiguration().getAbNDisplayManager().displayDisjointTribalAbstractionNetwork(disjointAbN);
+                            }
                         },
                         warningManager);
             }
