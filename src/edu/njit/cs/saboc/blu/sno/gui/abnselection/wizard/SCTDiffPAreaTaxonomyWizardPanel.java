@@ -1,6 +1,7 @@
 package edu.njit.cs.saboc.blu.sno.gui.abnselection.wizard;
 
 import edu.njit.cs.saboc.blu.core.gui.panels.abnderivationwizard.AbNDerivationWizardPanel;
+import edu.njit.cs.saboc.blu.core.utils.toolstate.OAFStateFileManager;
 import edu.njit.cs.saboc.blu.sno.gui.openrelease.LoadReleasePanel;
 import edu.njit.cs.saboc.blu.sno.gui.openrelease.LoadReleasePanel.LocalDataSourceListener;
 import edu.njit.cs.saboc.blu.sno.gui.openrelease.NoSCTDataSourceLoadedException;
@@ -32,10 +33,13 @@ public class SCTDiffPAreaTaxonomyWizardPanel extends AbNDerivationWizardPanel {
     
     private final JCheckBox chkDeriveDescriptiveDelta;
     
-    public SCTDiffPAreaTaxonomyWizardPanel(SCTAbNFrameManager displayFrameListener) {
+    public SCTDiffPAreaTaxonomyWizardPanel(
+            OAFStateFileManager stateFileManager,
+            SCTAbNFrameManager displayFrameListener) {
+        
         this.displayFrameListener = displayFrameListener;
         
-        this.loadFromReleasePanel = new LoadReleasePanel(displayFrameListener, null);
+        this.loadFromReleasePanel = new LoadReleasePanel(displayFrameListener, stateFileManager);
         this.loadFromReleasePanel.addLocalDataSourceLoadedListener(new LocalDataSourceListener() {
 
             @Override

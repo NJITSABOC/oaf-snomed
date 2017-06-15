@@ -225,7 +225,8 @@ public class LoadReleasePanel extends JPanel {
         
         chooseReleaseBox.setEnabled(true);
                 
-        btnOpenRecentRelease.setEnabled(true);
+        btnOpenRecentRelease.setEnabled(this.stateFileManager.isInitialized());
+        
         btnOpenReleaseFolder.setEnabled(true);
 
         loadedDataSource = Optional.empty();
@@ -240,7 +241,7 @@ public class LoadReleasePanel extends JPanel {
     }
     
     private boolean releaseHistoryAvailable() {
-        return stateFileManager != null && stateFileManager.getRecentlyOpenedOntologiesManager() != null;
+        return stateFileManager.isInitialized();
     }
     
     private void displayRecentReleaseMenu() {
@@ -249,7 +250,13 @@ public class LoadReleasePanel extends JPanel {
             return;
         }
         
-        ArrayList<RecentlyOpenedFile> recentReleases = stateFileManager.getRecentlyOpenedOntologiesManager().getRecentlyOpenedFiles(5);
+        ArrayList<RecentlyOpenedFile> recentReleases;
+        
+        try {
+            recentReleases = stateFileManager.getRecentlyOpenedOntologiesManager().getRecentlyOpenedFiles(5);
+        } catch(RecentlyOpenedFileException rofe) {
+            return;
+        }
         
         JPopupMenu recentReleaseMenu = new JPopupMenu();
         
@@ -375,7 +382,7 @@ public class LoadReleasePanel extends JPanel {
                 
                 try {
                     
-                    if(stateFileManager != null) {
+                    if(stateFileManager.isInitialized()) {
                         stateFileManager.getRecentlyOpenedOntologiesManager().
                                 addOrUpdateRecentlyOpenedFile(selectedFile);
                     }

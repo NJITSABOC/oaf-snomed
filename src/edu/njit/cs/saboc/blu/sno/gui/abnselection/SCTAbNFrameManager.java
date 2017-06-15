@@ -81,7 +81,7 @@ public class SCTAbNFrameManager extends AbNDisplayManager  {
                 this, 
                 warningManager);
         
-        MultiAbNGraphFrame graphFrame = new MultiAbNGraphFrame(mainFrame);
+        MultiAbNGraphFrame graphFrame = new MultiAbNGraphFrame(mainFrame, stateFileManager);
         graphFrame.setInitializers(initializers);
 
         graphFrame.displayPAreaTaxonomy(taxonomy);
@@ -105,7 +105,7 @@ public class SCTAbNFrameManager extends AbNDisplayManager  {
                 this, 
                 warningManager);
         
-        MultiAbNGraphFrame graphFrame = new MultiAbNGraphFrame(mainFrame);
+        MultiAbNGraphFrame graphFrame = new MultiAbNGraphFrame(mainFrame, stateFileManager);
         graphFrame.setInitializers(initializers);
 
         graphFrame.displayTAN(tan);
@@ -129,7 +129,7 @@ public class SCTAbNFrameManager extends AbNDisplayManager  {
                 this, 
                 warningManager);
         
-        MultiAbNGraphFrame graphFrame = new MultiAbNGraphFrame(mainFrame);
+        MultiAbNGraphFrame graphFrame = new MultiAbNGraphFrame(mainFrame, stateFileManager);
         graphFrame.setInitializers(initializers);
         
         graphFrame.displayDisjointPAreaTaxonomy(
@@ -154,7 +154,7 @@ public class SCTAbNFrameManager extends AbNDisplayManager  {
                 this,
                 warningManager);
 
-        MultiAbNGraphFrame graphFrame = new MultiAbNGraphFrame(mainFrame);
+        MultiAbNGraphFrame graphFrame = new MultiAbNGraphFrame(mainFrame, stateFileManager);
         graphFrame.setInitializers(initializers);
 
         graphFrame.displayDisjointTAN(
@@ -177,7 +177,7 @@ public class SCTAbNFrameManager extends AbNDisplayManager  {
                 this,
                 warningManager);
 
-        MultiAbNGraphFrame graphFrame = new MultiAbNGraphFrame(mainFrame);
+        MultiAbNGraphFrame graphFrame = new MultiAbNGraphFrame(mainFrame, stateFileManager);
         graphFrame.setInitializers(initializers);
 
         graphFrame.displayTargetAbstractionNetwork(targetAbN);
@@ -200,7 +200,7 @@ public class SCTAbNFrameManager extends AbNDisplayManager  {
                 this,
                 warningManager);
 
-        MultiAbNGraphFrame graphFrame = new MultiAbNGraphFrame(mainFrame);
+        MultiAbNGraphFrame graphFrame = new MultiAbNGraphFrame(mainFrame, stateFileManager);
         graphFrame.setInitializers(initializers);
         
         graphFrame.displayAreaTaxonomy(taxonomy);
@@ -223,7 +223,7 @@ public class SCTAbNFrameManager extends AbNDisplayManager  {
                 this,
                 warningManager);
 
-        MultiAbNGraphFrame graphFrame = new MultiAbNGraphFrame(mainFrame);
+        MultiAbNGraphFrame graphFrame = new MultiAbNGraphFrame(mainFrame, stateFileManager);
         graphFrame.setInitializers(initializers);
 
         graphFrame.displayBandTAN(tan);
@@ -243,6 +243,7 @@ public class SCTAbNFrameManager extends AbNDisplayManager  {
         
         NATBrowserFrame<SCTConcept> browserFrame = new NATBrowserFrame<>(
             mainFrame,
+            stateFileManager,
             dataSource, 
             new SCTNATLayout());
         

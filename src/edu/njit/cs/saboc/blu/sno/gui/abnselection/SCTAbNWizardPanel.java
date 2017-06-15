@@ -2,6 +2,7 @@ package edu.njit.cs.saboc.blu.sno.gui.abnselection;
 
 import edu.njit.cs.saboc.blu.core.datastructure.hierarchy.Hierarchy;
 import edu.njit.cs.saboc.blu.core.gui.panels.abnderivationwizard.targetbased.TargetAbNDerivationWizardPanel;
+import edu.njit.cs.saboc.blu.core.utils.toolstate.OAFStateFileManager;
 import edu.njit.cs.saboc.blu.sno.abn.pareataxonomy.SCTInheritableProperty;
 import edu.njit.cs.saboc.blu.sno.gui.abnselection.createanddisplay.CreateAndDisplaySCTPAreaTaxonomy;
 import edu.njit.cs.saboc.blu.sno.gui.abnselection.createanddisplay.CreateAndDisplaySCTTAN;
@@ -46,18 +47,25 @@ public class SCTAbNWizardPanel extends JPanel {
     private final TargetAbNDerivationWizardPanel targetAbNDerivationWizardPanel;
     
     private final SCTAbNFrameManager frameManager;
+    
+    private final OAFStateFileManager stateFileManager;
 
-    public SCTAbNWizardPanel(SCTAbNFrameManager frameManager, boolean includeDiff) {
+    public SCTAbNWizardPanel(
+            OAFStateFileManager stateFileManager, 
+            SCTAbNFrameManager frameManager, 
+            boolean includeDiff) {
+        
         this.setLayout(new BorderLayout());
         
         this.frameManager = frameManager;
+        
+        this.stateFileManager = stateFileManager;
         
         this.abnSelectionTabs = new JTabbedPane();
         this.abnSelectionTabs.setBorder(
                 BorderFactory.createTitledBorder(
                         BorderFactory.createLineBorder(Color.GREEN, 2), 
                 "Derive an Abstraction Network"));
-        
         
         this.pareaTaxonomyDerivationWizardPanel = new SCTPAreaTaxonomyWizardPanel( 
                 
@@ -80,7 +88,9 @@ public class SCTAbNWizardPanel extends JPanel {
         pareaPanel.add(pareaTaxonomyDerivationWizardPanel, BorderLayout.CENTER);
         
         
-        this.diffPAreaTaxonomyDerivationWizardPanel = new SCTDiffPAreaTaxonomyWizardPanel(frameManager);
+        this.diffPAreaTaxonomyDerivationWizardPanel = new SCTDiffPAreaTaxonomyWizardPanel(
+                stateFileManager,
+                frameManager);
         
         
         JPanel diffPAreaPanel = new JPanel(new BorderLayout());

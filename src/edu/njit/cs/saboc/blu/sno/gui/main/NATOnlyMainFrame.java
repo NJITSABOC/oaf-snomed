@@ -1,6 +1,5 @@
 package edu.njit.cs.saboc.blu.sno.gui.main;
 
-import edu.njit.cs.saboc.blu.core.utils.toolstate.OAFRecentlyOpenedFileManager;
 import edu.njit.cs.saboc.blu.core.utils.toolstate.OAFStateFileManager;
 import edu.njit.cs.saboc.blu.sno.gui.openrelease.LoadReleasePanel;
 import edu.njit.cs.saboc.blu.sno.gui.openrelease.LoadReleasePanel.LocalDataSourceListener;
@@ -22,20 +21,16 @@ public class NATOnlyMainFrame extends JFrame {
     private final LoadReleasePanel loadReleasePanel;
     private final NATBrowserPanel browserPanel;
     
-    private OAFStateFileManager stateFileManager;
+    private final OAFStateFileManager stateFileManager = new OAFStateFileManager("BLUSNO");
     
     public NATOnlyMainFrame() {
         
-        try {
-            this.stateFileManager = new OAFStateFileManager("BLUSNO");
-        } catch (OAFRecentlyOpenedFileManager.RecentlyOpenedFileException rofe) {
-            this.stateFileManager = null;
-        }
-        
         this.loadReleasePanel = new LoadReleasePanel(null, stateFileManager);
+        
         this.loadReleasePanel.setBorder(BorderFactory.createEtchedBorder());
         
         this.loadReleasePanel.addLocalDataSourceLoadedListener(new LocalDataSourceListener() {
+            
             @Override
             public void localDataSourceLoaded(SCTRelease release) {
                 browserPanel.setDataSource(release.getConceptBrowserDataSource());
@@ -58,7 +53,11 @@ public class NATOnlyMainFrame extends JFrame {
             }
         });
         
-        this.browserPanel = new NATBrowserPanel<>(this, new SCTNATLayout());
+        this.browserPanel = new NATBrowserPanel<>(
+                this, 
+                stateFileManager,
+                new SCTNATLayout());
+        
         this.browserPanel.setEnabled(false);
         
         JPanel contentPanel = new JPanel(new BorderLayout());
