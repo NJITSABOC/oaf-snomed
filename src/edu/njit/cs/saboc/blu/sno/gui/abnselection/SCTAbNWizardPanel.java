@@ -11,6 +11,7 @@ import edu.njit.cs.saboc.blu.sno.gui.abnselection.wizard.AttributeRelationshipRo
 import edu.njit.cs.saboc.blu.sno.gui.abnselection.wizard.SCTDiffPAreaTaxonomyWizardPanel;
 import edu.njit.cs.saboc.blu.sno.gui.abnselection.wizard.SCTInheritablePropertyRetriever;
 import edu.njit.cs.saboc.blu.sno.gui.abnselection.wizard.SCTPAreaTaxonomyWizardPanel;
+import edu.njit.cs.saboc.blu.sno.gui.abnselection.wizard.SCTPAreaTaxonomyWizardPanel.SCTPAreaTaxonomyDerivationAction;
 import edu.njit.cs.saboc.blu.sno.gui.abnselection.wizard.SCTTANDerivationWizardPanel;
 import edu.njit.cs.saboc.blu.sno.gui.abnselection.wizard.SCTTargetHierarchyRetriever;
 import edu.njit.cs.saboc.blu.sno.gui.gep.panels.tan.configuration.SCTTANConfiguration;
@@ -67,23 +68,22 @@ public class SCTAbNWizardPanel extends JPanel {
                         BorderFactory.createLineBorder(Color.GREEN, 2), 
                 "Derive an Abstraction Network"));
         
-        this.pareaTaxonomyDerivationWizardPanel = new SCTPAreaTaxonomyWizardPanel( 
-                
-                (release, root, availableProperties, selectedProperties, useStatedRels) -> {
-                    CreateAndDisplaySCTPAreaTaxonomy createPAreaTaxonomy = new CreateAndDisplaySCTPAreaTaxonomy(
-                            "Creating partial-area taxonomy...",
-                            root, 
-                            availableProperties,
-                            selectedProperties,
-                            frameManager,
-                            release,
-                            useStatedRels);
-                    
-                    createPAreaTaxonomy.run();
-                    
-                }, frameManager);
+        SCTPAreaTaxonomyDerivationAction pareaTaxonomyDerivationAction = (release, root, availableProperties, selectedProperties, useStatedRels) -> {
+            CreateAndDisplaySCTPAreaTaxonomy createPAreaTaxonomy = new CreateAndDisplaySCTPAreaTaxonomy(
+                    "Creating partial-area taxonomy...",
+                    root,
+                    availableProperties,
+                    selectedProperties,
+                    frameManager,
+                    release,
+                    useStatedRels);
+
+            createPAreaTaxonomy.run();
+        };
+
         
-        
+        this.pareaTaxonomyDerivationWizardPanel = new SCTPAreaTaxonomyWizardPanel(pareaTaxonomyDerivationAction, frameManager);
+
         JPanel pareaPanel = new JPanel(new BorderLayout());
         pareaPanel.add(pareaTaxonomyDerivationWizardPanel, BorderLayout.CENTER);
         

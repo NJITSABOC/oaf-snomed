@@ -108,6 +108,7 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
 
     @Override
     public GraphFrameInitializer<PAreaTaxonomy, PAreaTaxonomyConfiguration> getAreaTaxonomyInitializer() {
+        
         return new AreaTaxonomyInitializer(warningManager) {
             
             @Override
@@ -233,9 +234,9 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
                                 frameManager,
                                 false),
                         
-                        (bound) -> {
-                            DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getAggregated(bound);
-                            config.getUIConfiguration().getAbNDisplayManager().displayDisjointPAreaTaxonomy(disjointAbN);
+                        (bound, isWeightedAggregated) -> {                           
+                                DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getAggregated(bound, isWeightedAggregated);
+                                config.getUIConfiguration().getAbNDisplayManager().displayDisjointPAreaTaxonomy(disjointAbN);                           
                         }, 
                         warningManager);
             }
@@ -266,7 +267,7 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
             @Override
             public AbNExplorationPanelGUIInitializer getExplorationGUIInitializer(DisjointAbNConfiguration config) {
 
-                ClusterTribalAbstractionNetwork tan = (ClusterTribalAbstractionNetwork)config.getAbstractionNetwork().getParentAbstractionNetwork();
+                ClusterTribalAbstractionNetwork tan = (ClusterTribalAbstractionNetwork) config.getAbstractionNetwork().getParentAbstractionNetwork();
 
                 return new DisjointAbNExplorationPanelInitializer(
                         config,
@@ -277,9 +278,9 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
                                 frameManager,
                                 false),
                         
-                        (bound) -> {
-                            DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getAggregated(bound);
-                            config.getUIConfiguration().getAbNDisplayManager().displayDisjointTribalAbstractionNetwork(disjointAbN);
+                        (bound, isWeightedAggregated) -> {
+                                DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getAggregated(bound, isWeightedAggregated);
+                                config.getUIConfiguration().getAbNDisplayManager().displayDisjointTribalAbstractionNetwork(disjointAbN);                            
                         },
                         warningManager);
             }
