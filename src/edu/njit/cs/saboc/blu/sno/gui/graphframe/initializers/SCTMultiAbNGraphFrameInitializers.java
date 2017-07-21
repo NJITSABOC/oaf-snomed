@@ -234,8 +234,8 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
                                 frameManager,
                                 false),
                         
-                        (bound, isWeightedAggregated) -> {                           
-                                DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getAggregated(bound, isWeightedAggregated);
+                        (ap) -> {                           
+                                DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getAggregated(ap);
                                 config.getUIConfiguration().getAbNDisplayManager().displayDisjointPAreaTaxonomy(disjointAbN);                           
                         }, 
                         warningManager);
@@ -278,8 +278,8 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
                                 frameManager,
                                 false),
                         
-                        (bound, isWeightedAggregated) -> {
-                                DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getAggregated(bound, isWeightedAggregated);
+                        (ap) -> {
+                                DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getAggregated(ap);
                                 config.getUIConfiguration().getAbNDisplayManager().displayDisjointTribalAbstractionNetwork(disjointAbN);                            
                         },
                         warningManager);
