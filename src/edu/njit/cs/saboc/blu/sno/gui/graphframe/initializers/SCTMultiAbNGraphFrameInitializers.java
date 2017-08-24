@@ -85,9 +85,9 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
     }
     
     @Override
-    public GraphFrameInitializer<PAreaTaxonomy, PAreaTaxonomyConfiguration> getPAreaTaxonomyInitializer(FrameState fs) {
+    public GraphFrameInitializer<PAreaTaxonomy, PAreaTaxonomyConfiguration> getPAreaTaxonomyInitializer(FrameState frameState) {
         
-        return new PAreaTaxonomyInitializer(warningManager) {
+        return new PAreaTaxonomyInitializer(warningManager, frameState) {
 
             @Override
             public TaskBarPanel getTaskBar(MultiAbNGraphFrame graphFrame, PAreaTaxonomyConfiguration config) {
@@ -108,9 +108,9 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
     }
 
     @Override
-    public GraphFrameInitializer<PAreaTaxonomy, PAreaTaxonomyConfiguration> getAreaTaxonomyInitializer() {
+    public GraphFrameInitializer<PAreaTaxonomy, PAreaTaxonomyConfiguration> getAreaTaxonomyInitializer(FrameState frameState) {
         
-        return new AreaTaxonomyInitializer(warningManager) {
+        return new AreaTaxonomyInitializer(warningManager, frameState) {
             
             @Override
             public TaskBarPanel getTaskBar(MultiAbNGraphFrame graphFrame, PAreaTaxonomyConfiguration config) {
@@ -131,9 +131,9 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
     }
 
     @Override
-    public GraphFrameInitializer<ClusterTribalAbstractionNetwork, TANConfiguration> getTANInitializer() {
+    public GraphFrameInitializer<ClusterTribalAbstractionNetwork, TANConfiguration> getTANInitializer(FrameState frameState) {
         
-        return new TANInitializer(warningManager) {
+        return new TANInitializer(warningManager, frameState) {
             
             @Override
             public TaskBarPanel getTaskBar(MultiAbNGraphFrame graphFrame, TANConfiguration config) {
@@ -155,8 +155,8 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
     
     
     @Override
-    public GraphFrameInitializer<ClusterTribalAbstractionNetwork, TANConfiguration> getBandTANInitializer() {
-        return new BandTANInitializer(warningManager) {
+    public GraphFrameInitializer<ClusterTribalAbstractionNetwork, TANConfiguration> getBandTANInitializer(FrameState frameState) {
+        return new BandTANInitializer(warningManager, frameState) {
             
             @Override
             public TaskBarPanel getTaskBar(MultiAbNGraphFrame graphFrame, TANConfiguration config) {
@@ -179,8 +179,8 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
     
 
     @Override
-    public GraphFrameInitializer<TargetAbstractionNetwork, TargetAbNConfiguration> getTargetAbNInitializer() {
-        return new TargetAbNInitializer(warningManager) {
+    public GraphFrameInitializer<TargetAbstractionNetwork, TargetAbNConfiguration> getTargetAbNInitializer(FrameState frameState) {
+        return new TargetAbNInitializer(warningManager, frameState) {
 
             @Override
             public TaskBarPanel getTaskBar(MultiAbNGraphFrame graphFrame, TargetAbNConfiguration config) {
@@ -201,7 +201,7 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
     }
 
     @Override
-    public GraphFrameInitializer<DisjointAbstractionNetwork, DisjointAbNConfiguration> getDisjointPAreaTaxonomyInitializer() {
+    public GraphFrameInitializer<DisjointAbstractionNetwork, DisjointAbNConfiguration> getDisjointPAreaTaxonomyInitializer(FrameState frameState) {
         
         return new DisjointAbNInitializer() {
 
@@ -235,17 +235,19 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
                                 frameManager,
                                 false),
                         
-                        (ap) -> {                           
-                                DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getAggregated(ap);
+                        (ap) -> {
+                                frameState.setAggregateProperty(ap);
+                                DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getAggregated(frameState.getAggregateProperty());
                                 config.getUIConfiguration().getAbNDisplayManager().displayDisjointPAreaTaxonomy(disjointAbN);                           
                         }, 
-                        warningManager);
+                        warningManager,
+                        frameState);
             }
         };
     }
 
     @Override
-    public GraphFrameInitializer<DisjointAbstractionNetwork, DisjointAbNConfiguration> getDisjointTANInitializer() {
+    public GraphFrameInitializer<DisjointAbstractionNetwork, DisjointAbNConfiguration> getDisjointTANInitializer(FrameState frameState) {
         
         return new DisjointAbNInitializer() {
             
@@ -283,7 +285,8 @@ public class SCTMultiAbNGraphFrameInitializers implements AbNGraphFrameInitializ
                                 DisjointAbstractionNetwork disjointAbN = config.getAbstractionNetwork().getAggregated(ap);
                                 config.getUIConfiguration().getAbNDisplayManager().displayDisjointTribalAbstractionNetwork(disjointAbN);                            
                         },
-                        warningManager);
+                        warningManager,
+                        frameState);
             }
         };
     }
