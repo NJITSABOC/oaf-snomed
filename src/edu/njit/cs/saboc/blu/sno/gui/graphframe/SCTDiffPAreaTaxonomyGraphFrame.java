@@ -10,7 +10,7 @@ import edu.njit.cs.saboc.blu.core.graph.pareataxonomy.diff.DiffPAreaTaxonomyGrap
 import edu.njit.cs.saboc.blu.core.graph.pareataxonomy.diff.DiffPAreaTaxonomySubviewLayout;
 import edu.njit.cs.saboc.blu.core.graph.pareataxonomy.diff.DiffTaxonomySubsetOptions;
 import edu.njit.cs.saboc.blu.core.gui.gep.initializer.DiffAbNGUIInitializer;
-import edu.njit.cs.saboc.blu.core.gui.gep.panels.DiffTaxonomySubsetSelectionPanel;
+import edu.njit.cs.saboc.blu.core.gui.gep.panels.DiffTaxonomySubsetSelectionButton.DiffTaxonomySubsetCreationAction;
 import edu.njit.cs.saboc.blu.core.gui.gep.utils.drawing.SinglyRootedNodeLabelCreator;
 import edu.njit.cs.saboc.blu.core.gui.gep.utils.drawing.pareataxonomy.DiffTaxonomyPainter;
 import edu.njit.cs.saboc.blu.core.gui.graphframe.GenericInternalGraphFrame;
@@ -29,7 +29,7 @@ public class SCTDiffPAreaTaxonomyGraphFrame extends GenericInternalGraphFrame<Di
     private final SCTAbNFrameManager displayListener;
     
         
-    private final DiffTaxonomySubsetSelectionPanel.DiffTaxonomySubsetCreationAction subsetCreationAction = (options) -> {
+    private final DiffTaxonomySubsetCreationAction subsetCreationAction = (options) -> {
         this.setDiffTaxonomySubsetView(options);
     };
 
