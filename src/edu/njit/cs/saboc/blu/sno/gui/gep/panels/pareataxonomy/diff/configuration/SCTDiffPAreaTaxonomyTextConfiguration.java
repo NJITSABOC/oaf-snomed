@@ -26,11 +26,6 @@ public class SCTDiffPAreaTaxonomyTextConfiguration extends DiffPAreaTaxonomyText
     }
 
     @Override
-    public String getContainerHelpDescription(Area area) {
-        return "[SCT DIFF AREA HELP DESCRIPTION]";
-    }
-
-    @Override
     public String getNodeHelpDescription(PArea parea) {
         return "[SCT DIFF PAREA HELP DESCRIPTION]";
     }

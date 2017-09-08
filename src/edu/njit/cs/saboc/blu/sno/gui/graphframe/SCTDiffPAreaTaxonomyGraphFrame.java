@@ -7,6 +7,10 @@ import edu.njit.cs.saboc.blu.core.abn.pareataxonomy.diff.DiffPArea;
 import edu.njit.cs.saboc.blu.core.abn.pareataxonomy.diff.DiffPAreaTaxonomy;
 import edu.njit.cs.saboc.blu.core.graph.AbstractionNetworkGraph;
 import edu.njit.cs.saboc.blu.core.graph.pareataxonomy.diff.DiffPAreaTaxonomyGraph;
+import edu.njit.cs.saboc.blu.core.graph.pareataxonomy.diff.DiffPAreaTaxonomySubviewLayout;
+import edu.njit.cs.saboc.blu.core.graph.pareataxonomy.diff.DiffTaxonomySubsetOptions;
+import edu.njit.cs.saboc.blu.core.gui.gep.initializer.DiffAbNGUIInitializer;
+import edu.njit.cs.saboc.blu.core.gui.gep.panels.DiffTaxonomySubsetSelectionButton.DiffTaxonomySubsetCreationAction;
 import edu.njit.cs.saboc.blu.core.gui.gep.utils.drawing.SinglyRootedNodeLabelCreator;
 import edu.njit.cs.saboc.blu.core.gui.gep.utils.drawing.pareataxonomy.DiffTaxonomyPainter;
 import edu.njit.cs.saboc.blu.core.gui.graphframe.GenericInternalGraphFrame;
@@ -24,6 +28,11 @@ public class SCTDiffPAreaTaxonomyGraphFrame extends GenericInternalGraphFrame<Di
 
     private final SCTAbNFrameManager displayListener;
     
+        
+    private final DiffTaxonomySubsetCreationAction subsetCreationAction = (options) -> {
+        this.setDiffTaxonomySubsetView(options);
+    };
+
     public SCTDiffPAreaTaxonomyGraphFrame(
             JFrame parentFrame,
             SCTAbNFrameManager displayListener) {
@@ -71,12 +80,39 @@ public class SCTDiffPAreaTaxonomyGraphFrame extends GenericInternalGraphFrame<Di
             AbstractionNetworkGraph newGraph = new DiffPAreaTaxonomyGraph(getParentFrame(), data, labelCreator, config);
             
             SwingUtilities.invokeLater(() -> {
-                displayAbstractionNetwork(newGraph, new DiffTaxonomyPainter(), config);
+                displayAbstractionNetwork(
+                        newGraph, 
+                        new DiffTaxonomyPainter(), 
+                        config, 
+                        new DiffAbNGUIInitializer(null, subsetCreationAction));
 
                 updateHierarchyInfoLabel(data);
             });
         });
         
         loadThread.start();
+    }
+
+    public void setDiffTaxonomySubsetView(DiffTaxonomySubsetOptions subsetOptions) {
+
+        DiffPAreaTaxonomyGraph graph = (DiffPAreaTaxonomyGraph) super.getGraph().get();
+
+        SCTDiffPAreaTaxonomyConfigurationFactory configFactory = new SCTDiffPAreaTaxonomyConfigurationFactory();
+        SCTDiffPAreaTaxonomyConfiguration config = configFactory.createConfiguration(
+                graph.getPAreaTaxonomy(),
+                displayListener);
+
+        SwingUtilities.invokeLater(() -> {
+
+            graph.setAbstractionNetworkLayout(
+                    new DiffPAreaTaxonomySubviewLayout(
+                            graph,
+                            graph.getPAreaTaxonomy(),
+                            config,
+                            subsetOptions));
+            
+            this.getAbNExplorationPanel().getDisplayPanel().reset();
+        });
+
     }
 }
